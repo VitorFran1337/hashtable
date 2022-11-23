@@ -11,19 +11,21 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
+import javax.swing.*;
 
 public class CustomFrame extends JFrame implements ActionListener {
-    static JButton printButton, addButton, delButton;
+    static JButton printButton, addButton, delButton, quitButton, creditButton;
     //this.setLayout(new GridLayout()); //seems perfect for print purposes
 
     CustomFrame(){
         this.setTitle("Hashtable");
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setSize(640,640);
+	    this.setResizable(false);
         this.setLocationRelativeTo(null); 
         this.setLayout(null);
 	    this.setVisible(true);
-        this.getContentPane().setBackground(new Color(158,158,158));
+        this.getContentPane().setBackground(new Color(0,128,0));
 
         printButton = new JButton();
         printButton = buttonConfig(printButton);
@@ -41,9 +43,20 @@ public class CustomFrame extends JFrame implements ActionListener {
         delButton.setEnabled(false);
         this.add(delButton);
     
+        quitButton = new JButton();
+        quitButton = buttonConfig(quitButton);
+        quitButton.addActionListener(this);
+        this.add(quitButton);
+        
+        creditButton = new JButton();
+        creditButton = buttonConfig(creditButton);
+        creditButton.addActionListener(this);
+        this.add(creditButton);
+
+
+
         JLabel label = labelConfig();
         this.add(label);
-        //this.pack(); set size to accomodate all components, has to be done after all components are added
     }
 
 
@@ -53,7 +66,7 @@ public class CustomFrame extends JFrame implements ActionListener {
         JLabel label = new JLabel("Hashtable");
         label.setBounds(200, 5, 250, 80);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setFont(new Font("Times New Roman",Font.BOLD,24));
+        label.setFont(new Font("Arial",Font.BOLD,24));
         label.setBackground(Color.white);
         label.setOpaque(true);
         label.setBorder(border);
@@ -78,6 +91,16 @@ public class CustomFrame extends JFrame implements ActionListener {
             button.setBounds(200, 300, 250, 80);
 
         }
+        if(button == quitButton){
+            button.setText("Sair");
+            button.setBounds(200, 400, 250, 80);
+
+        }
+        if(button == creditButton){
+            button.setText("Créditos");
+            button.setBounds(200, 500, 250, 80);
+
+        }
         return button;
         //button.setEnabled(false); disable a button, useful for when the list is empty?
     }
@@ -90,17 +113,21 @@ public class CustomFrame extends JFrame implements ActionListener {
             if(hash.getMaxLen()>0){
                 delButton.setEnabled(true);
             }
-        }
-        else if(e.getSource()== delButton){
+        }else 
+            if(e.getSource()== delButton){
                 hash.removal();
                 if(hash.getMaxLen()==0){
                     delButton.setEnabled(false);
                 }
-        }
-        else if(e.getSource() == printButton){
+        }else 
+            if(e.getSource() == printButton){
             new ShowTable();
-             
-
+        }else
+            if (e.getSource() == quitButton) {
+            System.exit(FRAMEBITS);
+        }else
+            if (e.getSource() == creditButton) {
+                JOptionPane.showMessageDialog(creditButton, "INTEGRANTES:\nHigor Gabriel Ferreira Silva - 2101910\nJonas Gonçalves D'angelo Moreira - 2101852\nVitor Pereira Francisco - 2101830");
         }
         
     }

@@ -23,22 +23,24 @@ public class priority_list {
 			start.setNext(nd);
 			start.setPrev(nd);
 
-		}else if(nd.getPriority()==1){
-			nd.setNext(start);
-			nd.setPrev(start.getPrev());
-			start.getPrev().setNext(nd);
-			start.setPrev(nd);
+		}else 
+			if(nd.getPriority()==1){
+				nd.setNext(start);
+				nd.setPrev(start.getPrev());
+				start.getPrev().setNext(nd);
+				start.setPrev(nd);
 
-		}else if(start.getPriority() == 1){
-			nd.setNext(start);
-			nd.setPrev(start.getPrev());
-			start.getPrev().setNext(nd);
-			start.setPrev(nd);
-			start = nd;
+		}else 
+			if(start.getPriority() == 1){
+				nd.setNext(start);
+				nd.setPrev(start.getPrev());
+				start.getPrev().setNext(nd);
+				start.setPrev(nd);
+				start = nd;
 
 		}else{
 			aux = start;
-			for(int i = 0; i < len; i++){
+			for(int i = 1; i < len; i++){
 				if(aux.getNext().getPriority()==0){
 					aux = aux.getNext();
 				}
@@ -56,29 +58,32 @@ public class priority_list {
 		len++;
 	}
 		
-	public void removal(int remKey){
+	public void removal(String remName){
 		aux = this.getStart();
-		for(int i = 0; i < len; i++){
-			if(aux.getKey() == remKey){
-				if(len == 2){
-					start = aux.getPrev();
-					aux.setPrev(aux.getPrev());
-					aux.setNext(aux.getNext());
-					
-				}else{
-				aux.getNext().setPrev(aux.getPrev());
-				aux.getPrev().setNext(aux.getNext());
-				JOptionPane.showMessageDialog(null,aux.getName()+" successfully removed.");
-				}
-				len--;
 
+		if (aux == null){
+			JOptionPane.showMessageDialog(null,"Not found!");
+			return;
+		}
+
+		for(int i = 0; i < len; i++){
+			if (!aux.getName().equals(remName)){
+				if (aux.getNext() == start){
+					JOptionPane.showMessageDialog(null, "Not found!");
+					return;
+				}
+				aux = aux.getNext();
+			}else{
+				if (start.getName().equals(remName)){
+					start = aux.getNext();
+				}
+				aux.getPrev().setNext(aux.getNext());
+				aux.getNext().setPrev(aux.getPrev());
 				break;
 			}
-			aux = aux.getNext();
 		}
-		if(len == 0){
-			start = null;
-		}
+		JOptionPane.showMessageDialog(null, aux.getName()+", Successfully removed!");
+		len--;
 	}
 	
 }

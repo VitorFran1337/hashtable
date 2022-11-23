@@ -49,6 +49,6 @@ public class Hash {
         String target = JOptionPane.showInputDialog("Input the name to be removed");
         int key = Node.assignKey(target);
         int hashkey = key%10;
-        array[hashkey].removal(key);
+        array[hashkey].removal(target);
     }
 }
